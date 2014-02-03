@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Path to save all downloaded / edited scripts to.
+SCRIPT_BASE=/tmp/meta.sh
+
 # Collect arguments to pass to the script's shell, via appending to
 # the shebang (which will be interpreted when we `eval` it)
 shargs=()
@@ -16,13 +19,13 @@ shift
 initargs="$@"
 
 # Name a local path for this script.
-scriptfile="/tmp/meta.sh/$scriptname"
+scriptfile="$SCRIPT_BASE/$scriptname"
 
 # Create the hierarchy to the script location
 mkdir -p `dirname "$scriptfile"`
 
 # Attempt to download the script
-curl http://meta.sh/$1 > "$scriptfile"
+curl "http://meta.sh/$scriptname" > "$scriptfile"
 
 # If we found and downloaded the script
 if [[ $? -eq 0 ]]; then
