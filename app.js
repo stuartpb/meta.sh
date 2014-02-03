@@ -4,6 +4,21 @@ var glob = require('glob');
 var q = require('queue-async');
 var fs = require('fs');
 var marked = require('marked');
+var hljs = require('highlight.js');
+
+function highlight(code, lang) {
+  // only highlight when lang is explicitly specified
+  return lang ? hljs.highlight(lang, code).value : code;
+}
+
+function highlightScript(code, lang) {
+  // highlight scripts "automatically" (which is to say, choose bash)
+  return hljs.highlightAuto(code, ['bash']);
+}
+
+function markedHLJS(str) {
+  return marked(str, {highlight: highlight});
+}
 
 module.exports = function appctor() {
   var app = express();
@@ -28,23 +43,33 @@ module.exports = function appctor() {
       : readmeBase + name + '.md';
     q().defer(readFileOrNull,scriptName).defer(readFileOrNull,readmeName)
       .await(function(err, script, readme) {
-        var content = {script: script};
-        if (readme) content.readme = {raw: readme, html: marked(readme)};
+        var highlighted = highlightScript(script);
+        var content = {script: {
+          raw: script,
+          html: highlighted.value,
+          lang: highlighted.language
+        }};
+        if (readme) content.readme = {raw: readme, html: markedHLJS(readme)};
         paths[name] = content;
       });
   });
 
   function respondWithPage(req, res, name, opts) {
     opts = opts || {};
-    opts.script = opts.script || paths[name].script;
+    opts.script = opts.script ||
+      paths[name].script && paths[name].script.html;
+    opts.lang = opts.lang ||
+      paths[name].script && paths[name].script.lang;
     opts.readme = opts.readme ||
       paths[name].readme && paths[name].readme.html;
+    opts.title = opts.title || 'meta.sh' +
+      (name == 'index' ? '' : '/' + name);
     res.render(opts.template || 'script.jade', opts);
   }
 
   function respondWithScript(req, res, name) {
     // Send as text/plain rather than application/x-sh
-    res.type('text/plain').send(paths[name].script);
+    res.type('text/plain').send(paths[name].script.raw);
   }
 
   function switchResponse(req, res, name, template) {

@@ -4,8 +4,9 @@ html
     meta(charset="utf-8")
     title= title
     link(rel="stylesheet", href="/style.css")
+    link(rel="stylesheet", href="/syntax.css")
   body
-    pre#script.script= script
+    pre#script(class="script "+lang)!= script
     if uasniffed || readme
       article
         if uasniffed
