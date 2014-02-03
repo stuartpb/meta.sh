@@ -1,0 +1,29 @@
+{
+  "name": "meta.sh",
+  "version": "0.0.0",
+  "description": "meta.sh",
+  "main": "app.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/stuartpb/meta.sh.git"
+  },
+  "author": "Stuart P. Bentley <stuart@testtrack4.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stuartpb/meta.sh/issues"
+  },
+  "dependencies": {
+    "jade": "~1.0.0",
+    "express": "~3.4.7",
+    "user-agent-is-browser": "~0.1.0",
+    "marked": "~0.2.10",
+    "send": "~0.1.4",
+    "queue-async": "~1.0.4",
+    "glob": "~3.2.7",
+    "nowww": "~1.1.2"
+  }
+}

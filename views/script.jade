@@ -1,0 +1,22 @@
+doctype
+html
+  head
+    meta(charset="utf-8")
+    title= title
+    link(rel="stylesheet",href="/style.css")
+  body
+    pre#script.script= script
+    if uasniffed
+      #uasniff.banner
+        p.
+          This HTML content is included because you requested <a href="//#{burl}">#{burl}</a>
+          with a <a href="https://en.wikipedia.org/wiki/User_agent">User-Agent</a> that is
+          <a href="https://github.com/stuartpb/user-agent-is-browser">recognized to be a browser<a/><sup>1</sup>.
+          When user-agents other than these (such as <code>curl</code> or <code>wget</code>)
+          request <a href="//#{burl}">#{burl}</a>, the response will include only the content
+          of the script above. You can get the bare code for this script in your browser by navigating to
+          <a href="//#{shurl}">#{shurl}</a>, or this HTML in a non-browser by requesting <a href="//#{htmurl}">#{htmurl}</a>.
+        p: sup.
+          1: #{ua}
+    if readme
+      #readme.readme!= readme
