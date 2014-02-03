@@ -53,8 +53,7 @@ module.exports = function appctor() {
     if (qsbrowser || uaIsBrowser(realua)) {
       respondWithPage(req, res, name, {
         template: template,
-        uasniffed: true,
-        ua: qsbrowser || realua,
+        uasniffed: qsbrowser || realua,
         burl: req.header('host') + req.url,
         shurl: req.header('host') + req.url + '.sh',
         htmurl: req.header('host') + req.url + '.html'
