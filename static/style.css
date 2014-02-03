@@ -1,8 +1,11 @@
 body {
   background: white;
   font-family: sans-serif;
+}
+
+article {
   max-width: 900px;
-  margin: 8px auto;
+  margin: auto;
 }
 
 /* Fancy dog-eared-page style for scripts */

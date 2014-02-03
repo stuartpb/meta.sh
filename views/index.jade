@@ -3,19 +3,19 @@ html
   head
     meta(charset="utf-8")
     title= title
-    link(rel="stylesheet",href="/style.css")
+    link(rel="stylesheet", href="/style.css")
   body
-    if uasniffed
-      #uasniff.banner
-        p.
-          You are seeing this page because you requested <a href="//meta.sh">meta.sh</a> with a
-          <a href="https://en.wikipedia.org/wiki/User_agent">User-Agent</a> that is
-          <a href="https://github.com/stuartpb/user-agent-is-browser">recognized to be a browser<a/><sup>1</sup>.
-          When user-agents other than these (such as <code>curl</code> or <code>wget</code>) request
-          <a href="//meta.sh">meta.sh</a>, the response will be the script at
-          <a href="//meta.sh/index.sh">meta.sh/index.sh</a>. You can retrieve this HTML in a non-browser by requesting
-          <a href="//meta.sh/index.html">meta.sh/index.html</a>.
-        p: sup.
-          1: #{ua}
-    if readme
+    article
+      if uasniffed
+        #uasniff.banner
+          p.
+            You are seeing this page because you requested <a href="//meta.sh">meta.sh</a> with a
+            <a href="https://en.wikipedia.org/wiki/User_agent">User-Agent</a> that is
+            <a href="https://github.com/stuartpb/user-agent-is-browser">recognized to be a browser<a/><sup>1</sup>.
+            When user-agents other than these (such as <code>curl</code> or <code>wget</code>) request
+            <a href="//meta.sh">meta.sh</a>, the response will be the script at
+            <a href="//meta.sh/index.sh">meta.sh/index.sh</a>. You can retrieve this HTML in a non-browser by requesting
+            <a href="//meta.sh/index.html">meta.sh/index.html</a>.
+          p: sup.
+            1: #{ua}
       #readme.readme!= readme
