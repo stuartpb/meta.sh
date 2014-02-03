@@ -1,6 +1,5 @@
 var express = require('express');
 var uaIsBrowser = require('user-agent-is-browser');
-var send = require('send');
 var glob = require('glob');
 var q = require('queue-async');
 var fs = require('fs');
@@ -44,8 +43,7 @@ module.exports = function appctor() {
 
   function respondWithScript(req, res, name) {
     // Send as text/plain rather than application/x-sh
-    res.header('Content-Type','text/plain');
-    send(req,'scripts/' + name + '.sh').pipe(res);
+    res.type('text/plain').send(paths[name].script);
   }
 
   function switchResponse(req, res, name, template) {
@@ -80,7 +78,7 @@ module.exports = function appctor() {
     respondWithScript(req, res, 'index');
   });
   app.get('/README.md', function rootRouteReadme(req, res, next) {
-    res.contentType('text/plain').send(paths.index.readme.raw);
+    res.type('text/plain').send(paths.index.readme.raw);
   });
 
   app.get('/:name(*)', function namedRoute(req, res, next) {
@@ -100,17 +98,16 @@ module.exports = function appctor() {
   });
   app.get('/:name(*)/README.md', function namedRouteReadme(req, res, next) {
     if(paths[req.params.name] && paths[req.params.name].readme)
-      res.contentType('text/plain').send(paths[req.params.name].readme.raw);
+      res.type('text/plain').send(paths[req.params.name].readme.raw);
     else next();
   });
 
   app.use(function(req, res) {
-    res.contentType('text/plain')
-      .send(404,'echo "meta.sh'+req.url+' not found"');
+    res.type('text/plain').send(404, 'echo "meta.sh'+req.url+' not found"');
   });
   app.use(function(err, req, res, next) {
-    res.contentType('text/plain')
-      .send(500,'echo -e ' + JSON.stringify(err.stack || err.toString()));
+    res.type('text/plain')
+      .send(500, 'echo -e ' + JSON.stringify(err.stack || err.toString()));
   });
 
   return app;
