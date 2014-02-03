@@ -1,4 +1,3 @@
-meta.sh
-=======
+# meta.sh(1)
 
-A curl-able repository of shell scripts.
+A curl-able repository of shell scripts

@@ -24,7 +24,8 @@ module.exports = function appctor() {
   var readmeBase = __dirname + '/readmes/';
   glob.sync(__dirname + '/scripts/**/*.sh').forEach(function (scriptName) {
     var name = scriptName.slice(scriptBase.length, -('.sh'.length));
-    var readmeName = readmeBase + name + '.md';
+    var readmeName = name == 'index' ? __dirname + '/README.md'
+      : readmeBase + name + '.md';
     q().defer(readFileOrNull,scriptName).defer(readFileOrNull,readmeName)
       .await(function(err, script, readme) {
         var content = {script: script};
