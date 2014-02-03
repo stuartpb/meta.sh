@@ -15,7 +15,7 @@ mkdir -p "$INSTALL_BASE"
 curl http://meta.sh/index.sh > "$INSTALL_PATH"
 
 # Inspect the script
-$EDITOR "INSTALL_PATH"
+$EDITOR "$INSTALL_PATH"
 
 # Set the downloaded script executable
 chmod +x $INSTALL_PATH
