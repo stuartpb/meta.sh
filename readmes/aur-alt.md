@@ -1,6 +1,13 @@
-# aur.sh(1)
+# aur.sh(1) - alternate version
 
 make packages from the [Arch User Repository](https://aur.archlinux.org/)
+via the mirror on pkgbuild.com
+
+This is the alternate version of the main aur.sh, that gets package files from
+the pkgbuild.com AUR mirror using `wget` instead of getting package files
+directly from the AUR using `curl` and `tar`. If the main Arch User Repository,
+or `curl` or `tar`, is having issues, this alternate version is called for:
+otherwise, the mainstream version at meta.sh/aur is probably a better choice.
 
 ## USAGE
 
@@ -39,7 +46,7 @@ aur.sh (the site root can be directed straight to bash via curl) with the `-s`
 (install package dependencies) and `-i` (install package after building)
 options for makepkg:
 
-    $ bash <(curl meta.sh/aur) -si [package ...]
+    $ bash <(curl meta.sh/aur-alt) -si [package ...]
 
 ## ADVANCED TRICKS
 
@@ -50,18 +57,7 @@ results of a query of non-repo package names to aur.sh, which will then
 redownload them, build them, and install any builds newer than what you
 currently have:
 
-    $ pacman -Qqm | xargs bash <(curl meta.sh/aur) -si --needed
-
-### Get from mirror
-
-meta.sh also provides an [alternate version][] of aur.sh that, instead of
-getting package files from the AUR using `curl` and `tar`, gets the files from
-the pkgbuild.com AUR mirror using `wget`. If, for some reason, you can't
-retrieve files from the main Arch User Repository, you can try:
-
-    $ bash <(curl meta.sh/aur-alt) -si [package ...]
-
-[alternate version]: http://meta.sh/aur-alt
+    $ pacman -Qqm | xargs bash <(curl meta.sh/aur-alt) -si --needed
 
 ## CAVEATS
 
@@ -71,4 +67,4 @@ have installed before you try to install their dependants. For example, the
 `yaourt` package in the AUR depends on the AUR package `package-query`, so to
 install `yaourt` with aur.sh, you need to specify `package-query` first:
 
-    $ bash <(curl meta.sh/aur) -si package-query yaourt
+    $ bash <(curl meta.sh/aur-alt) -si package-query yaourt
