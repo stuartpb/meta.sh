@@ -75,6 +75,9 @@ module.exports = function appctor() {
   function switchResponse(req, res, name, template) {
     var qsbrowser = req.query.browser;
     var realua = req.header('user-agent');
+    
+    // Note that this response varies by UA, for caching
+    res.header('Vary','User-Agent');
 
     if (qsbrowser || uaIsBrowser(realua)) {
       respondWithPage(req, res, name, {
