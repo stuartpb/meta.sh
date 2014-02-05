@@ -6,7 +6,7 @@ html
     link(rel="stylesheet", href="/style.css")
     link(rel="stylesheet", href="/syntax.css")
   body
-    pre#script(class="script "+lang)!= script
+    pre#script.script: code(class=lang)!= script
     if uasniffed || readme
       article
         if uasniffed
