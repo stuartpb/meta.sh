@@ -1,18 +1,14 @@
 body {
   background: white;
   font-family: sans-serif;
-}
-
-article {
   max-width: 900px;
-  margin: auto;
+  margin: 8px auto;
 }
 
 /* Fancy dog-eared-page style for scripts */
 
 .script {
    position:relative;
-   font-size: 1.5em;
    color:#000;
    background:#f8f8f8;
    margin-top: 0.5em;
