@@ -5,6 +5,7 @@ html
     title= title
     link(rel="stylesheet", href="/style.css")
     link(rel="stylesheet", href="/syntax.css")
+    link(rel="canonical", href="//"+host+"/index.html")
   body
     a(href="https://github.com/stuartpb/meta.sh")
       img(style="position: absolute; top: 0; right: 0; border: 0;"
@@ -14,13 +15,13 @@ html
       if uasniffed
         #uasniff.banner
           p.
-            You are seeing this page because you requested <a href="//meta.sh">meta.sh</a> with a
+            You are seeing this page because you requested <a href="//#{host}">#{host}</a> with a
             <a href="https://en.wikipedia.org/wiki/User_agent">User-Agent</a> that is
             <a href="https://github.com/stuartpb/user-agent-is-browser">recognized to be a browser<a/><sup>1</sup>.
             When user-agents other than these (such as <code>curl</code> or <code>wget</code>) request
-            <a href="//meta.sh">meta.sh</a>, the response will be the script at
-            <a href="//meta.sh/index.sh">meta.sh/index.sh</a>. You can retrieve this HTML in a non-browser by requesting
-            <a href="//meta.sh/index.html">meta.sh/index.html</a>.
+            <a href="//#{host}">#{host}</a>, the response will be the script at
+            <a href="//#{host}/index.sh">#{host}/index.sh</a>. You can retrieve this HTML in a non-browser by requesting
+            <a href="//#{host}/index.html">#{host}/index.html</a>.
           p: sup.
             1: #{uasniffed}
       #readme.readme!= readme

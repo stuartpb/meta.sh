@@ -64,6 +64,8 @@ module.exports = function appctor() {
       paths[name].readme && paths[name].readme.html;
     opts.title = opts.title || 'meta.sh' +
       (name == 'index' ? '' : '/' + name);
+    opts.host = opts.host || req.header('host');
+    opts.name = opts.name || name;
     res.render(opts.template || 'script.jade', opts);
   }
 
@@ -75,17 +77,14 @@ module.exports = function appctor() {
   function switchResponse(req, res, name, template) {
     var qsbrowser = req.query.browser;
     var realua = req.header('user-agent');
-    
+
     // Note that this response varies by UA, for caching
     res.header('Vary','User-Agent');
 
     if (qsbrowser || uaIsBrowser(realua)) {
       respondWithPage(req, res, name, {
         template: template,
-        uasniffed: qsbrowser || realua,
-        burl: req.header('host') + req.url,
-        shurl: req.header('host') + req.url + '.sh',
-        htmurl: req.header('host') + req.url + '.html'
+        uasniffed: qsbrowser || realua
       });
     } else {
       respondWithScript(req, res, name);
@@ -131,7 +130,8 @@ module.exports = function appctor() {
   });
 
   app.use(function(req, res) {
-    res.type('text/plain').send(404, 'echo "meta.sh'+req.url+' not found"');
+    res.type('text/plain').send(404, 'echo "'
+      + req.header('host') + req.url+' not found"');
   });
   app.use(function(err, req, res, next) {
     res.type('text/plain')
