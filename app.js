@@ -131,7 +131,7 @@ module.exports = function appctor() {
 
   app.use(function(req, res) {
     res.type('text/plain').send(404, 'echo "'
-      + req.header('host') + req.url+' not found"');
+      + req.header('host') + req.url + ' not found"');
   });
   app.use(function(err, req, res, next) {
     res.type('text/plain')

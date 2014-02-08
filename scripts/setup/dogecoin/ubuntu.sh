@@ -29,7 +29,7 @@ strip dogecoind
 sudo useradd -mN dogecoin
 sudo chmod 0700 /home/dogecoin
 sudo mkdir /home/dogecoin/bin
-sudo cp ~/dogecoin/src/dogecoind /home/dogecoin/bin/dogecoind
+sudo cp dogecoind /home/dogecoin/bin/dogecoind
 sudo chown -R dogecoin:users /home/dogecoin/bin
 
 # Delete the (no longer needed) source files
