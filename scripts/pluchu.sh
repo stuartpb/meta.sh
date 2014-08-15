@@ -7,10 +7,12 @@
 
 # The name of the user / remote.
 # Changing this to "dokku" will make a client script for dokku.
-SERVNAME="plushu"
+# (If making a client script for Dokku, you'll probably also want to disable
+# the implicit "--app" below.)
+servname="plushu"
 
 # Set the "REMOTE" variable according to any "remote" command-line arg.
-case $1 in
+case "$1" in
   --remote)
     shift
     REMOTE=$1
@@ -22,21 +24,31 @@ case $1 in
 esac
 
 # The name of the Git remote to read the server URL from.
-# By default, the remote name is $SERVNAME ("plushu"):
+# By default, the remote name is $servname ("plushu"):
 # you can change that here.
-REMOTE=${REMOTE:-$SERVNAME}
-REMOTE_URL=$(git config --get remote.$REMOTE.url)
+REMOTE=${REMOTE:-$servname}
+remote_url=$(git config --get remote.$REMOTE.url)
 
-if [ $? -ne 0 ]; then
-    echo "Remote \"$REMOTE\" not found"
-    exit 1
+if [[ "$?" -ne 0 ]]; then
+  echo "Remote \"$REMOTE\" not found"
+  exit 1
 fi
 
 # Safety check that the remote user name is the same as the expected service
-if [ ${REMOTE_URL%%@*} != $SERVNAME ]; then
-    echo "Remote \"$REMOTE\" does not appear to be a $SERVNAME server"
-    exit 1
+if [[ "${remote_url%%@*}" != "$servname" ]]; then
+  echo "Remote \"$REMOTE\" does not appear to be a $servname server"
+  exit 1
 fi
 
-REMOTE_HOST=${REMOTE_URL%%:*}
-ssh -t "$REMOTE_HOST" "$@"
+# The hostname to connect to.
+host=${remote_url%:*}
+
+# The name of the app to implicitly define via the "--app" option.
+# Undefine this to disable. (Not supported by Dokku.)
+APP=${APP-${remote_url##*:}}
+
+if [[ -n "$APP" ]]; then
+  set -- "--app=$APP" "$@"
+fi
+
+ssh "$host" "$@"
