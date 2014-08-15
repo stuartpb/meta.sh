@@ -6,7 +6,7 @@ if [[ $EUID != 0 ]]; then
 fi
 
 # Install Plusku dependencies
-pacman --noconfirm --Syu
+pacman --noconfirm -Syu
 pacman --noconfirm --needed -S docker nginx git
 systemctl enable docker nginx
 systemctl start docker nginx
