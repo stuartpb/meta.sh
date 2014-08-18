@@ -51,4 +51,4 @@ if [[ -n "$APP" ]]; then
   set -- "--app=$APP" "$@"
 fi
 
-ssh "$host" "$@"
+ssh -qt "$host" -- "$@"

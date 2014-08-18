@@ -28,8 +28,8 @@ instance):
 You can run plushu commands on that server by calling this client script (named
 `pluchu` in this example):
 
-    pluchu version
+    pluchu domains
 
 In this example repository, this line is functionally equivalent to:
 
-    ssh -t plushu@example.com version
+    ssh -qt plushu@example.com -- --app=myapp domains
