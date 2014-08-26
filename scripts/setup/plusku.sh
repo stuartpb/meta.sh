@@ -15,25 +15,22 @@ case "$distro" in
     pacman -Syu --noconfirm
 
     # Add dependencies
-    pacman -S --noconfirm --needed sudo git docker nginx
+    pacman -S --noconfirm --needed sudo git docker
 
     # Set up and start services
-    systemctl enable docker nginx
-    systemctl start docker nginx
+    systemctl enable docker
+    systemctl start docker
     ;;
 
   ubuntu)
     # Get Docker
     curl -s https://get.docker.io/ubuntu/ | sh
 
-    # Add Nginx PPA
-    add-apt-repository -y ppa:nginx/stable
-
     # Update apt-get lists
     apt-get update
 
     # Install other dependencies
-    apt-get install -y git nginx dnsutils
+    apt-get install -y git dnsutils
     ;;
   *)
     echo "This setup script does not support this distro." >&2
