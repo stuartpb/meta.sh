@@ -30,7 +30,7 @@ case "$distro" in
     apt-get update
 
     # Install other dependencies
-    apt-get install -y git dnsutils
+    apt-get install -y git inotify-tools
     ;;
   *)
     echo "This setup script does not support this distro." >&2
