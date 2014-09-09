@@ -43,9 +43,12 @@ fi
 # The hostname to connect to.
 host=${remote_url%:*}
 
+# The name of the repo on the remote.
+remote_repo=${remote_url##*:}
+
 # The name of the app to implicitly define via the "--app" option.
 # Undefine this to disable. (Not supported by Dokku.)
-APP=${APP-${remote_url##*:}}
+APP=${APP-${remote_repo%.git}}
 
 if [[ -n "$APP" ]]; then
   set -- "--app=$APP" "$@"
