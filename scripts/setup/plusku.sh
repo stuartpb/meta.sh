@@ -24,7 +24,7 @@ case "$distro" in
 
   ubuntu)
     # Get Docker
-    curl -s https://get.docker.io/ubuntu/ | sh
+    curl -s https://get.docker.com/ubuntu/ | sh
 
     # Update apt-get lists
     apt-get update
